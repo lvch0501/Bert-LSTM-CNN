@@ -31,6 +31,19 @@ parameters['kernels'] = config_para["kernels"]
 parameters['num_kernels'] = config_para["kernel_num"]
 parameters['pts'] = config_para["pts"] == '1'
 
+#
+model_name = 'use_word' + str(parameters['use_word']) + \
+            ' use_char' + str(parameters['use_char']) + \
+            ' drop_out' + str(parameters['dropout']) + \
+            ' hidden_size' + str(parameters['word_lstm_dim']) + \
+            ' hidden_layer' + str(parameters['hidden_layer']) + \
+            ' lower' + str(parameters['lower']) + \
+            ' allemb' + str(parameters['all_emb']) + \
+            ' kernels' + str(parameters['kernels'])[1:-1] + \
+            ' num_kernels' + str(parameters['num_kernels'])[1:-1] + \
+            ' padding' + str(parameters['padding']) + \
+            ' pts' + str(parameters['pts']) + \
+            ' w_emb' + str(parameters['word_dim'])
 
 
 print()
