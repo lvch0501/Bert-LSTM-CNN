@@ -8,6 +8,7 @@ from read import load_parameter
 from utils import load_sentences, update_tag_scheme, word_mapping, augment_with_pretrained
 from utils import char_mapping, tag_mapping, pt_mapping, save_mappings, reload_mappings
 from utils import prepare_dataset
+from GRAMCNN import GRAMCNN
 models_path = "../models"
 
 config_para = load_parameter()
@@ -35,9 +36,9 @@ parameters['use_char'] = config_para["use_char"] == '1'
 parameters['hidden_layer'] = int(config_para["hidden_layer"])
 parameters['reload'] = config_para["reload"] == '1'
 #parameters['kernels'] = [2,3,4,5] if type(config_para.kernel_size) == str else map(lambda x : int(x), opts.kernel_size)
-parameters['kernels'] = [2,3,4,5] if config_para["kernels"] == "" else list(config_para["kernels"].split())
+parameters['kernels'] = [2,3,4,5] if config_para["kernels"] == "" else [int(i) for i in config_para["kernels"].split(",")]
 #parameters['num_kernels'] = [100,100,100,100] if type(config_para.kernel_num) == str else map(lambda x : int(x), opts.kernel_num)
-parameters['num_kernels'] = [100,100,100,100] if config_para["kernel_num"] == "" else list(config_para["kernel_num"].split())
+parameters['num_kernels'] = [100,100,100,100] if config_para["kernel_num"] == "" else [int(i) for i in config_para["kernel_num"].split(",")]
 parameters['pts'] = config_para["pts"] == '1'
 parameters['epochs'] = int(config_para["epochs"])
 parameters['freq_eval'] = int(config_para["freq_eval"])
