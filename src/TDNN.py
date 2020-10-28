@@ -11,12 +11,12 @@ class TDNN(Model):
         self.feature_maps = feature_maps
         self.kernels = kernels
 
-        length = self.__length(input)
+        # length = self.__length(input)
         input_ = tf.expand_dims(input_, -1)
         layers = []
 
         for idx, kernel_dim in enumerate(kernels):
-            conv = conv2d(input_, feature_maps[idx], kernels, self.embed_dim, name="kernel%d" % idx)
+            conv = conv2d(input_, feature_maps[idx], kernel_dim, self.embed_dim, name="kernel%d" % idx)
             pool = tf.reduce_max(tf.tanh(conv), axis=1, keep_dims=True)
 
             layers.append(tf.reshape(pool, [-1, feature_maps[idx]]))

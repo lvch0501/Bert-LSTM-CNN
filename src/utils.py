@@ -1,6 +1,7 @@
 import codecs
 import re
 import pickle
+import numpy as np
 
 def load_sentences(path, lower=True, zeros=True):
 
@@ -294,3 +295,126 @@ def cap_feature(s):
         return 3
     else:
         return 4
+
+
+def create_input(data, parameters, add_label, singletons=None, padding = False, max_seq_len = 200, use_pts = False):
+    """
+    Take sentence data and return an input for
+    the training or the evaluation function.
+    """
+    input = {}
+    words = data['words']
+    word_len = len(words)
+    chars = data['chars']
+    tags = data['tags']
+    char_for = []
+    max_length = 0
+    if not padding:
+        if singletons is not None:
+            words = insert_singletons(words, singletons)
+        if parameters['cap_dim']:
+            caps = data['caps']
+        char_for, char_rev, char_pos, max_length = pad_word_chars(chars, singletons)
+        pts = data['pts']
+    else:
+        if singletons is not None:
+            words = insert_singletons(words, singletons)
+        words = padding_word(words, max_seq_len)
+        caps = padding_word(data['caps'], max_seq_len)
+        pts = padding_word(data['pts'], max_seq_len)
+        tags = padding_word(tags, max_seq_len)
+        char_for, char_rev, char_pos, max_length = pad_word_chars(chars, singletons)
+        char_for = padding_chars(char_for, max_seq_len, max_length)
+    if parameters['word_dim']:
+        input['word'] = words
+    if parameters['char_dim']:
+        input['char_for'] = char_for
+    if parameters['cap_dim']:
+        input['cap'] = caps
+    if add_label:
+        input['label'] = tags
+    if use_pts:
+        input['pts'] = pts
+    return input, word_len
+
+
+
+def insert_singletons(words, singletons, p=0.1):
+    """
+    Replace singletons by the unknown word with a probability p.
+    """
+    new_words = []
+    for word in words:
+        if word in singletons and np.random.uniform() < p:
+            new_words.append(0)
+        else:
+            new_words.append(word)
+    return new_words
+
+
+
+def pad_word_chars(words, singletons):
+    """
+    Pad the characters of the words in a sentence.
+    Input:
+        - list of lists of ints (list of words, a word being a list of char indexes)
+    Output:
+        - padded list of lists of ints
+        - padded list of lists of ints (where chars are reversed)
+        - list of ints corresponding to the index of the last character of each word
+    """
+    if singletons is not None:
+        words = insert_unk(words)
+    max_length = max([len(word) for word in words]) + 2
+    if max_length < 7:
+        max_length = 7
+    char_for = []
+    char_rev = []
+    char_pos = []
+    for word in words:
+        word = [2] + word + [3]
+        padding = [1] * (max_length - len(word))
+        char_for.append(word + padding)
+        char_rev.append(word[::-1] + padding)
+        char_pos.append(len(word) - 1)
+    return char_for, char_rev, char_pos, max_length
+
+
+def insert_unk(words, p = 0.05):
+    new_words = []
+    flat = True
+    for word in words:
+        new_word = []
+        for i in word:
+            if np.random.uniform() < p and flat:
+                new_word.append(0)
+                flat = False
+            else:
+                new_word.append(i)
+        new_words.append(new_word)
+    return new_words
+
+
+def padding_word(input, max_length):
+    words_len = len(input)
+    output = input + [0] * (max_length - words_len)
+    return output
+
+
+def padding_chars(chars, max_seq_len, max_char_len):
+    word_len = len(chars)
+    diff = max_seq_len - word_len
+    output = chars
+    for i in range(diff):
+        output.append([1] * max_char_len)
+    return output
+
+
+def evaluate(parameters, sess, raw_sentences, parsed_sentences,
+             id_to_tag, remove = True, padding = False, max_seq_len = 200, use_pts = False):
+    """
+    Evaluate current model using CoNLL script.
+    """
+    n_tags = len(id_to_tag)
+    predictions = []
+    count = np.zeros((n_tags, n_tags), dtype=np.int32)

@@ -3,6 +3,7 @@ import tensorflow as tf
 from base import Model
 from TDNN import TDNN
 from ops import highway
+from  n_gram import n_gram
 class GRAMCNN(Model):
 
 
@@ -82,6 +83,12 @@ class GRAMCNN(Model):
        init = tf.global_variables_initializer()
        self.sess.run(init)
 
+
+   def __length(self, sequence):
+       used = tf.sign(tf.reduce_max(tf.abs(sequence), reduction_indices=2))
+       length = tf.reduce_sum(used, reduction_indices=1)
+       length = tf.cast(length, tf.int32)
+       return length
 
    def _build(self, pretrained_word_embedding):
        with tf.variable_scope("LSTMTDNN"):
@@ -218,3 +225,22 @@ class GRAMCNN(Model):
                    grads.append(grad)
            self.optim = self.opt.apply_gradients(zip(grads, params),
                                                  global_step=self.global_step)
+
+
+
+   def train(self, inputs, word_len=[]):
+       feed_dict = {self.char_input: inputs['char_for'],
+                    self.word_input: inputs['word'],
+                    self.target: inputs['label'],
+                    self.drop_rate: 0.5}
+       if self.use_pts:
+           feed_dict[self.pt_input] = inputs['pts']
+       if not self.padding:
+           _, batch_loss = self.sess.run([self.optim, self.loss],
+                                         feed_dict=feed_dict)
+       else:
+           feed_dict[self.s_len] = word_len
+           _, batch_loss = self.sess.run([self.optim, self.loss],
+                                         feed_dict=feed_dict)
+
+       return batch_loss

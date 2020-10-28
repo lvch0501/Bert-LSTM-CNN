@@ -7,7 +7,7 @@ from collections import OrderedDict
 from read import load_parameter
 from utils import load_sentences, update_tag_scheme, word_mapping, augment_with_pretrained
 from utils import char_mapping, tag_mapping, pt_mapping, save_mappings, reload_mappings
-from utils import prepare_dataset
+from utils import prepare_dataset, create_input, evaluate
 from GRAMCNN import GRAMCNN
 models_path = "../models"
 
@@ -195,5 +195,55 @@ gramcnn = GRAMCNN(n_words, len(char_to_id), len(pt_to_id),
                     kernels=parameters['kernels'], hidden_size = parameters['word_lstm_dim'], hidden_layers = parameters['hidden_layer'],
                     padding = parameters['padding'], max_seq_len = max_seq_len, train_size = len(train_data))
 
+if parameters["reload"]:
+    gramcnn.load(models_path, model_name)
 
-print()
+for epoch in range(n_epochs):
+    epoch_costs = []
+    print("Starting epoch %i..." % epoch)
+
+    for i, index in enumerate(np.random.permutation(len(train_data))):
+        inputs, word_len = create_input(train_data[index], parameters, True, singletons,
+                                        padding=parameters["padding"], max_seq_len=max_seq_len, use_pts=parameters['pts'])
+        assert inputs['char_for']
+        assert inputs['word']
+        assert inputs['label']
+
+        # break
+        if len(inputs['label']) == 1:
+            continue
+
+        train_loss = []
+        temp = []
+        temp.append(word_len)
+        batch_loss = gramcnn.train(inputs, temp)
+        train_loss.append(batch_loss)
+
+        if (i % 500 == 0 and i != 0):
+            print("Epoch[%d], " % (epoch) + "Iter " + str(i) + \
+                  ", Minibatch Loss= " + "{:.6f}".format(np.mean(train_loss[-500:])))
+            train_loss = []
+
+
+        if i % 2000 == 0 and i != 0:
+            dev_score = evaluate(parameters, gramcnn, dev_sentences,
+                                 dev_data, id_to_tag, padding = parameters['padding'],
+                                 max_seq_len = max_seq_len, use_pts = parameters['pts'])
+            print("dev_score_end")
+            print("Score on dev: %.5f" % dev_score)
+            if dev_score > best_dev:
+                best_dev = dev_score
+                print("New best score on dev.")
+                print("Saving model to disk...")
+                gramcnn.save(models_path ,model_name)
+            if os.path.isfile(parameters["test"]):
+                if i % 8000 == 0 and i != 0:
+                    test_score = evaluate(parameters, gramcnn, test_sentences,
+                                          test_data, id_to_tag, padding = parameters['padding'],
+                                          max_seq_len = max_seq_len, use_pts = parameters['pts'])
+                    print("Score on test: %.5f" % test_score)
+                    if test_score > best_test:
+                        best_test = test_score
+                        print("New best score on test.")
+
+        print()
