@@ -42,6 +42,7 @@ parameters['num_kernels'] = [100,100,100,100] if config_para["kernel_num"] == ""
 parameters['pts'] = config_para["pts"] == '1'
 parameters['epochs'] = int(config_para["epochs"])
 parameters['freq_eval'] = int(config_para["freq_eval"])
+parameters['test'] = config_para['test']
 # model name
 model_name = 'use_word' + str(parameters['use_word']) + \
             ' use_char' + str(parameters['use_char']) + \
@@ -245,5 +246,3 @@ for epoch in range(n_epochs):
                     if test_score > best_test:
                         best_test = test_score
                         print("New best score on test.")
-
-        print()

@@ -244,3 +244,28 @@ class GRAMCNN(Model):
                                          feed_dict=feed_dict)
 
        return batch_loss
+
+   def test(self, inputs, word_len=[]):
+       feed_dict = {self.char_input: inputs['char_for'],
+                    self.word_input: inputs['word'],
+                    self.drop_rate: 0}
+       if self.use_pts:
+           feed_dict[self.pt_input] = inputs['pts']
+
+       if not self.crf:
+           preds = self.sess.run(self.y_pred,
+                                 feed_dict=feed_dict)
+       else:
+           if not self.padding:
+               logit, transition_params = self.sess.run([self.logits, self.transition_params],
+                                                        feed_dict=feed_dict)
+               preds, _ = tf.contrib.crf.viterbi_decode(
+                   logit, transition_params)
+           else:
+               feed_dict[self.s_len] = word_len
+               logit, transition_params = self.sess.run([self.logits, self.transition_params],
+                                                        feed_dict=feed_dict)
+               preds, _ = tf.contrib.crf.viterbi_decode(
+                   logit[:word_len[0]], transition_params)
+
+       return preds
