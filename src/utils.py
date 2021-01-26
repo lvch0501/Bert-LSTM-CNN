@@ -3,6 +3,8 @@ import re
 import pickle
 import numpy as np
 import os
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import MultipleLocator
 
 models_path = "../models"
 eval_path = "../evaluation"
@@ -251,7 +253,7 @@ def reload_mappings(mappings_path):
     return id_to_word, id_to_char, id_to_tag, id_to_pt, dico_words, tag_to_id
 
 
-def prepare_dataset(sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, lower=False):
+def prepare_dataset(sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, bio_bert_vocab, lower=False, ):
     """
     Prepare the dataset. Return a list of lists of dictionaries containing:
         - word indexes
@@ -265,6 +267,8 @@ def prepare_dataset(sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, lowe
         str_words = [w[0] for w in s]
         words = [word_to_id[w if w in word_to_id else '<UNK>']
                  for w in str_words]
+        bio_bert_words = [bio_bert_vocab[w if w in bio_bert_vocab else '[UNK]']
+                          for w in str_words]
         if (len(words) > maxlen):
             maxlen = len(words)
         # Skip characters that are not in the training set
@@ -279,7 +283,8 @@ def prepare_dataset(sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, lowe
             'chars': chars,
             'caps': caps,
             'tags': tags,
-            'pts'  : pts
+            'pts'  : pts,
+            'bio_bert': bio_bert_words
         })
     return data, maxlen
 
@@ -313,6 +318,7 @@ def create_input(data, parameters, add_label, singletons=None, padding = False, 
     word_len = len(words)
     chars = data['chars']
     tags = data['tags']
+    bio_bert = data['bio_bert']
     char_for = []
     max_length = 0
     if not padding:
@@ -337,6 +343,8 @@ def create_input(data, parameters, add_label, singletons=None, padding = False, 
         input['char_for'] = char_for
     if parameters['cap_dim']:
         input['cap'] = caps
+    if parameters['bio_bert_dim']:
+        input['bio_bert'] = bio_bert
     if add_label:
         input['label'] = tags
     if use_pts:
@@ -415,9 +423,42 @@ def padding_chars(chars, max_seq_len, max_char_len):
         output.append([1] * max_char_len)
     return output
 
+def draw_pic(pic_save_path, result):
+    x = list(range(len(result["F1"])))
+    y = [float(i) for i in result["F1"]]
+    y1_max = np.argmax(y)
+    show_max = '[' + str(y1_max) + ' ' + str(y[y1_max]) + ']'
+    plt.plot(y1_max, y[y1_max], 'ko')
+    plt.annotate(show_max, xy=(y1_max, y[y1_max]), xytext=(y1_max, y[y1_max]))
+    plt.plot(x, y)
+    y_major_locator = MultipleLocator(10)
+    ax = plt.gca()
+    ax.yaxis.set_major_locator(y_major_locator)
+    plt.xlim(-0.5, len(x))
+    plt.ylim(60, 110)
+    print("saving the pic")
+    plt.savefig(pic_save_path+"/epoch"+str(len(result["F1"]))+".png")
+
+def save_data(data_save_path, data_str, pic_save_path):
+    dump_dict = {}
+    with open(data_save_path, "rb") as f:
+        dump_dict = pickle.load(f)
+
+    pattern = re.compile("[0-9]+.[0-9]+")
+    result = re.findall(pattern, data_str)
+    assert(len(result)==4)
+    dump_dict["accuracy"].append(result[0])
+    dump_dict["precision"].append(result[1])
+    dump_dict["recall"].append(result[2])
+    dump_dict["F1"].append(result[3])
+    with open(data_save_path, "wb+") as f:
+        pickle.dump(dump_dict, f, pickle.HIGHEST_PROTOCOL)
+    if len(dump_dict["F1"]) % 20 == 1:
+        draw_pic(pic_save_path, dump_dict)
+
 
 def evaluate(parameters, sess, raw_sentences, parsed_sentences,
-             id_to_tag, remove = True, padding = False, max_seq_len = 200, use_pts = False):
+             id_to_tag, data_save_path, pic_save_path, remove = True, padding = False, max_seq_len = 200, use_pts = False):
     """
     Evaluate current model using CoNLL script.
     """
@@ -469,6 +510,7 @@ def evaluate(parameters, sess, raw_sentences, parsed_sentences,
     for line in eval_lines:
         print(line)
 
+    save_data(data_save_path, eval_lines[1], pic_save_path)
     # Remove temp files
     if remove:
         os.remove(output_path)
@@ -517,3 +559,4 @@ def iobes_iob(tags):
         else:
             raise Exception('Invalid format!')
     return new_tags
+

@@ -3,12 +3,15 @@ import gensim
 import itertools
 import re
 import numpy as np
+import pickle
 from collections import OrderedDict
 from read import load_parameter
 from utils import load_sentences, update_tag_scheme, word_mapping, augment_with_pretrained
 from utils import char_mapping, tag_mapping, pt_mapping, save_mappings, reload_mappings
 from utils import prepare_dataset, create_input, evaluate
 from GRAMCNN import GRAMCNN
+from tensorflow import pywrap_tensorflow
+import datetime
 models_path = "../models"
 
 config_para = load_parameter()
@@ -23,6 +26,7 @@ parameters['char_dim'] = int(config_para["char_dim"])
 parameters['char_lstm_dim'] = int(config_para["char_lstm_dim"])
 parameters['char_bidirect'] = config_para["char_bidirect"] == '1'
 parameters['word_dim'] = int(config_para["word_dim"])
+parameters['bio_bert_dim'] = int(config_para['bio_bert_dim'])
 parameters['word_lstm_dim'] = int(config_para["word_lstm_dim"])
 parameters['word_bidirect'] = config_para["word_bidirect"] == '1'
 parameters['pre_emb'] = config_para["pre_emb"]
@@ -33,8 +37,12 @@ parameters['dropout'] = float(config_para["dropout"])
 parameters['lr_method'] = config_para["lr_method"]
 parameters['use_word'] = config_para["use_word"] == '1'
 parameters['use_char'] = config_para["use_char"] == '1'
+parameters['use_bert_word'] = config_para['use_bert_word'] == '1'
+parameters['bio_bert_embedding'] = config_para['bio_bert_embedding']
+parameters['bio_bert_vocab'] = config_para['bio_bert_vocab']
 parameters['hidden_layer'] = int(config_para["hidden_layer"])
 parameters['reload'] = config_para["reload"] == '1'
+parameters['model_path'] = config_para["model_path"]
 #parameters['kernels'] = [2,3,4,5] if type(config_para.kernel_size) == str else map(lambda x : int(x), opts.kernel_size)
 parameters['kernels'] = [2,3,4,5] if config_para["kernels"] == "" else [int(i) for i in config_para["kernels"].split(",")]
 #parameters['num_kernels'] = [100,100,100,100] if type(config_para.kernel_num) == str else map(lambda x : int(x), opts.kernel_num)
@@ -44,8 +52,12 @@ parameters['epochs'] = int(config_para["epochs"])
 parameters['freq_eval'] = int(config_para["freq_eval"])
 parameters['test'] = config_para['test']
 # model name
-model_name = 'use_word' + str(parameters['use_word']) + \
+if parameters['reload']==1:
+    model_name = parameters['model_path']
+else:
+    model_name = 'use_word' + str(parameters['use_word']) + \
             ' use_char' + str(parameters['use_char']) + \
+            ' use_bert' + str(parameters['use_bert_word']) + \
             ' drop_out' + str(parameters['dropout']) + \
             ' hidden_size' + str(parameters['word_lstm_dim']) + \
             ' hidden_layer' + str(parameters['hidden_layer']) + \
@@ -55,7 +67,8 @@ model_name = 'use_word' + str(parameters['use_word']) + \
             ' num_kernels' + str(parameters['num_kernels'])[1:-1] + \
             ' padding' + str(parameters['padding']) + \
             ' pts' + str(parameters['pts']) + \
-            ' w_emb' + str(parameters['word_dim'])
+            ' crf' + str(parameters['crf']) + \
+            ' w_emb' + str(parameters['word_dim'])+str(datetime.datetime.now())
 
 
 
@@ -86,6 +99,16 @@ if 'bin' in parameters['pre_emb']:
     wordmodel = gensim.models.KeyedVectors.load_word2vec_format(parameters['pre_emb'], binary=True)
 else:
     wordmodel = gensim.models.KeyedVectors.load_word2vec_format(parameters['pre_emb'], binary=False)
+
+# load bioBert embedding
+bert_word_embedding = None
+word_index_dic = {}
+reader = pywrap_tensorflow.NewCheckpointReader(parameters['bio_bert_embedding'])
+bert_word_embedding = reader.get_tensor("bert/embeddings/word_embeddings")
+with open(parameters['bio_bert_vocab'], "r", encoding="utf8") as f:
+    vocab = f.readlines()
+    for index, i in enumerate(vocab):
+        word_index_dic[i.strip()] = index
 
 
 # Create a dictionary / mapping of words
@@ -126,15 +149,15 @@ else:
 # Index sentences
 m3 = 0
 train_data,m1 = prepare_dataset(
-    train_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id,parameters["lower"]
+    train_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, word_index_dic, parameters["lower"]
 )
 dev_data,m2 = prepare_dataset(
-    dev_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id,parameters["lower"]
+    dev_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, word_index_dic, parameters["lower"]
 )
 
 if os.path.isfile(config_para["test"]):
     test_data,m3 = prepare_dataset(
-        test_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, parameters["lower"]
+        test_sentences, word_to_id, char_to_id, tag_to_id, pt_to_id, word_index_dic, parameters["lower"]
     )
 max_seq_len = max(m1,m2,m3)
 print("max length is %i" % (max_seq_len))
@@ -186,11 +209,15 @@ print ('%i found directly, %i after lowercasing, '
       ))
 
 gramcnn = GRAMCNN(n_words, len(char_to_id), len(pt_to_id),
+                    bert_vocab_len=len(word_index_dic),
                     use_word = parameters['use_word'],
+                    use_bert_word=parameters['use_bert_word'],
                     use_char = parameters['use_char'],
                     use_pts = parameters['pts'],
                     num_classes = len(id_to_tag),
                     word_emb = parameters['word_dim'],
+                    bert_word_embedding_dim = parameters['bio_bert_dim'],
+                    bert_word_embedding = bert_word_embedding,
                     drop_out = parameters['dropout'],
                     word2vec = word_emb_weight,feature_maps=parameters['num_kernels'],#,200,200, 200,200],
                     kernels=parameters['kernels'], hidden_size = parameters['word_lstm_dim'], hidden_layers = parameters['hidden_layer'],
@@ -199,6 +226,18 @@ gramcnn = GRAMCNN(n_words, len(char_to_id), len(pt_to_id),
 if parameters["reload"]:
     gramcnn.load(models_path, model_name)
 
+data_save_path = models_path+"/"+model_name+"/plot.pkl"
+dump_dict = {}
+dump_dict["accuracy"] = []
+dump_dict["precision"] = []
+dump_dict["recall"] = []
+dump_dict["F1"] = []
+with open(data_save_path, "wb") as f:
+    pickle.dump(dump_dict, f, pickle.HIGHEST_PROTOCOL)
+
+pic_save_path = models_path+"/"+model_name+"/pic"
+if not os.path.exists(pic_save_path):
+    os.mkdir(pic_save_path)
 for epoch in range(n_epochs):
     epoch_costs = []
     print("Starting epoch %i..." % epoch)
@@ -206,6 +245,7 @@ for epoch in range(n_epochs):
     for i, index in enumerate(np.random.permutation(len(train_data))):
         inputs, word_len = create_input(train_data[index], parameters, True, singletons,
                                         padding=parameters["padding"], max_seq_len=max_seq_len, use_pts=parameters['pts'])
+
         assert inputs['char_for']
         assert inputs['word']
         assert inputs['label']
@@ -228,7 +268,7 @@ for epoch in range(n_epochs):
 
         if i % 2000 == 0 and i != 0:
             dev_score = evaluate(parameters, gramcnn, dev_sentences,
-                                 dev_data, id_to_tag, padding = parameters['padding'],
+                                 dev_data, id_to_tag, padding = parameters['padding'],data_save_path=data_save_path, pic_save_path=pic_save_path,
                                  max_seq_len = max_seq_len, use_pts = parameters['pts'])
             print("dev_score_end")
             print("Score on dev: %.5f" % dev_score)
@@ -240,8 +280,8 @@ for epoch in range(n_epochs):
             if os.path.isfile(parameters["test"]):
                 if i % 8000 == 0 and i != 0:
                     test_score = evaluate(parameters, gramcnn, test_sentences,
-                                          test_data, id_to_tag, padding = parameters['padding'],
-                                          max_seq_len = max_seq_len, use_pts = parameters['pts'])
+                                          test_data, id_to_tag, data_save_path=data_save_path, padding = parameters['padding'],pic_save_path=pic_save_path,
+                                          max_seq_len = max_seq_len, use_pts = parameters['pts'],)
                     print("Score on test: %.5f" % test_score)
                     if test_score > best_test:
                         best_test = test_score

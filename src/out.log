@@ -1,0 +1,938 @@
+nohup: 忽略输入
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/usr/lvch/venv/lib/python3.6/site-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+train average length: 22
+Found 10267 unique words (127177 in total)
+Loading pretrained embeddings from embeddings
+Found 88 unique characters
+Found 3 unique named entity tags
+Found 46 unique pos tags
+max length is 177
+5686 / 938  sentences in train / dev.
+Loaded 2231686 pretrained embeddings.
+2231696 / 2232304 (99.9728%) words have been initialized with pretrained embeddings.
+2231686 found directly, 0 after lowercasing, 10 after lowercasing + zero.
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:41: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+
+2021-01-26 21:21:51.911000: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcuda.so.1
+2021-01-26 21:21:51.955629: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+name: GeForce RTX 2080 Ti major: 7 minor: 5 memoryClockRate(GHz): 1.545
+pciBusID: 0000:02:00.0
+2021-01-26 21:21:51.955850: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2021-01-26 21:21:51.957153: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2021-01-26 21:21:51.958151: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2021-01-26 21:21:51.958400: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2021-01-26 21:21:51.959345: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2021-01-26 21:21:51.960050: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2021-01-26 21:21:51.961985: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2021-01-26 21:21:51.962849: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0
+2021-01-26 21:21:51.963142: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2021-01-26 21:21:52.099280: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x54c26a0 executing computations on platform CUDA. Devices:
+2021-01-26 21:21:52.099343: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): GeForce RTX 2080 Ti, Compute Capability 7.5
+2021-01-26 21:21:52.103225: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3699850000 Hz
+2021-01-26 21:21:52.104072: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7397530 executing computations on platform Host. Devices:
+2021-01-26 21:21:52.104115: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): <undefined>, <undefined>
+2021-01-26 21:21:52.105353: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+name: GeForce RTX 2080 Ti major: 7 minor: 5 memoryClockRate(GHz): 1.545
+pciBusID: 0000:02:00.0
+2021-01-26 21:21:52.105419: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2021-01-26 21:21:52.105446: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2021-01-26 21:21:52.105470: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2021-01-26 21:21:52.105493: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2021-01-26 21:21:52.105516: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2021-01-26 21:21:52.105538: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2021-01-26 21:21:52.105563: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2021-01-26 21:21:52.107647: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0
+2021-01-26 21:21:52.107705: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2021-01-26 21:21:52.109667: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1181] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-01-26 21:21:52.109702: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1187]      0 
+2021-01-26 21:21:52.109714: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 0:   N 
+2021-01-26 21:21:52.111609: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10078 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080 Ti, pci bus id: 0000:02:00.0, compute capability: 7.5)
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:44: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:109: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:112: The name tf.get_variable is deprecated. Please use tf.compat.v1.get_variable instead.
+
+WARNING:tensorflow:From /usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py:507: UniformUnitScaling.__init__ (from tensorflow.python.ops.init_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.initializers.variance_scaling instead with distribution=uniform to get equivalent behavior.
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/TDNN.py:20: calling reduce_max_v1 (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:176: calling dropout (from tensorflow.python.ops.nn_ops) with keep_prob is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `rate` instead of `keep_prob`. Rate should be set to `rate = 1 - keep_prob`.
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:179: BasicLSTMCell.__init__ (from tensorflow.python.ops.rnn_cell_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This class is equivalent as tf.keras.layers.LSTMCell, and will be replaced by that in Tensorflow 2.0.
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:181: MultiRNNCell.__init__ (from tensorflow.python.ops.rnn_cell_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This class is equivalent as tf.keras.layers.StackedRNNCells, and will be replaced by that in Tensorflow 2.0.
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:188: bidirectional_dynamic_rnn (from tensorflow.python.ops.rnn) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `keras.layers.Bidirectional(keras.layers.RNN(cell))`, which is equivalent to this API
+WARNING:tensorflow:From /usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/ops/rnn.py:464: dynamic_rnn (from tensorflow.python.ops.rnn) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `keras.layers.RNN(cell)`, which is equivalent to this API
+WARNING:tensorflow:Entity <bound method MultiRNNCell.call of <tensorflow.python.ops.rnn_cell_impl.MultiRNNCell object at 0x7fb47643e278>> could not be transformed and will be executed as-is. Please report this to the AutgoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: converting <bound method MultiRNNCell.call of <tensorflow.python.ops.rnn_cell_impl.MultiRNNCell object at 0x7fb47643e278>>: AttributeError: module 'gast' has no attribute 'Num'
+WARNING:tensorflow:From /usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/ops/init_ops.py:1251: calling VarianceScaling.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/ops/rnn_cell_impl.py:738: calling Zeros.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:Entity <bound method BasicLSTMCell.call of <tensorflow.python.ops.rnn_cell_impl.BasicLSTMCell object at 0x7fb476468dd8>> could not be transformed and will be executed as-is. Please report this to the AutgoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: converting <bound method BasicLSTMCell.call of <tensorflow.python.ops.rnn_cell_impl.BasicLSTMCell object at 0x7fb476468dd8>>: AssertionError: Bad argument number for Name: 3, expecting 4
+WARNING:tensorflow:From /usr/lvch/venv/lib/python3.6/site-packages/tensorflow/python/ops/rnn.py:244: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+WARNING:tensorflow:Entity <bound method MultiRNNCell.call of <tensorflow.python.ops.rnn_cell_impl.MultiRNNCell object at 0x7fb47643e2e8>> could not be transformed and will be executed as-is. Please report this to the AutgoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: converting <bound method MultiRNNCell.call of <tensorflow.python.ops.rnn_cell_impl.MultiRNNCell object at 0x7fb47643e2e8>>: AttributeError: module 'gast' has no attribute 'Num'
+WARNING:tensorflow:Entity <bound method BasicLSTMCell.call of <tensorflow.python.ops.rnn_cell_impl.BasicLSTMCell object at 0x7fb476477a90>> could not be transformed and will be executed as-is. Please report this to the AutgoGraph team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output. Cause: converting <bound method BasicLSTMCell.call of <tensorflow.python.ops.rnn_cell_impl.BasicLSTMCell object at 0x7fb476477a90>>: AssertionError: Bad argument number for Name: 3, expecting 4
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:236: The name tf.GraphKeys is deprecated. Please use tf.compat.v1.GraphKeys instead.
+
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:238: The name tf.train.exponential_decay is deprecated. Please use tf.compat.v1.train.exponential_decay instead.
+
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/GRAMCNN.py:245: The name tf.train.MomentumOptimizer is deprecated. Please use tf.compat.v1.train.MomentumOptimizer instead.
+
+2021-01-26 21:22:08.990566: W tensorflow/compiler/jit/mark_for_compilation_pass.cc:1412] (One-time warning): Not using XLA:CPU for cluster because envvar TF_XLA_FLAGS=--tf_xla_cpu_global_jit was not set.  If you want XLA:CPU, either set that envvar, or use experimental_jit_scope to enable XLA:CPU.  To confirm that XLA is active, pass --vmodule=xla_compilation_cache=1 (as a proper command-line flag, not via TF_XLA_FLAGS) or set the envvar XLA_FLAGS=--xla_hlo_profile.
+Starting epoch 0...
+2021-01-26 21:22:14.090792: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2021-01-26 21:22:14.292299: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+Epoch[0], Iter 500, Minibatch Loss= 0.025786
+Epoch[0], Iter 1000, Minibatch Loss= 1.291084
+Epoch[0], Iter 1500, Minibatch Loss= 0.027496
+Epoch[0], Iter 2000, Minibatch Loss= 0.449905
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 606 phrases; correct: 416.
+accuracy:  96.69%; precision:  68.65%; recall:  53.82%; FB1:  60.33
+               UN: precision:  68.65%; recall:  53.82%; FB1:  60.33  606
+saving the pic
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21622/22363 (96.68649%)
+60.33
+dev_score_end
+Score on dev: 60.33000
+New best score on dev.
+Saving model to disk...
+WARNING:tensorflow:From /usr/lvch/Bert-LSTM-CNN/src/base.py:13: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+ [*] Saving checkpoints...
+Epoch[0], Iter 2500, Minibatch Loss= 1.056610
+Epoch[0], Iter 3000, Minibatch Loss= 0.128445
+Epoch[0], Iter 3500, Minibatch Loss= 0.016663
+Epoch[0], Iter 4000, Minibatch Loss= 0.024254
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 837 phrases; correct: 605.
+accuracy:  97.70%; precision:  72.28%; recall:  78.27%; FB1:  75.16
+               UN: precision:  72.28%; recall:  78.27%; FB1:  75.16  837
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21849/22363 (97.70156%)
+75.16
+dev_score_end
+Score on dev: 75.16000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[0], Iter 4500, Minibatch Loss= 0.023155
+Epoch[0], Iter 5000, Minibatch Loss= 8.609749
+Epoch[0], Iter 5500, Minibatch Loss= 0.016975
+Starting epoch 1...
+Epoch[1], Iter 500, Minibatch Loss= 3.307571
+Epoch[1], Iter 1000, Minibatch Loss= 0.004391
+Epoch[1], Iter 1500, Minibatch Loss= 0.035782
+Epoch[1], Iter 2000, Minibatch Loss= 0.005157
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 705 phrases; correct: 540.
+accuracy:  97.50%; precision:  76.60%; recall:  69.86%; FB1:  73.07
+               UN: precision:  76.60%; recall:  69.86%; FB1:  73.07  705
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21805/22363 (97.50481%)
+73.07
+dev_score_end
+Score on dev: 73.07000
+Epoch[1], Iter 2500, Minibatch Loss= 0.015961
+Epoch[1], Iter 3000, Minibatch Loss= 1.262909
+Epoch[1], Iter 3500, Minibatch Loss= 0.038773
+Epoch[1], Iter 4000, Minibatch Loss= 0.484497
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 737 phrases; correct: 582.
+accuracy:  97.84%; precision:  78.97%; recall:  75.29%; FB1:  77.09
+               UN: precision:  78.97%; recall:  75.29%; FB1:  77.09  737
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21881/22363 (97.84465%)
+77.09
+dev_score_end
+Score on dev: 77.09000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[1], Iter 4500, Minibatch Loss= 1.050720
+Epoch[1], Iter 5000, Minibatch Loss= 0.000126
+Epoch[1], Iter 5500, Minibatch Loss= 0.039612
+Starting epoch 2...
+Epoch[2], Iter 500, Minibatch Loss= 0.382446
+Epoch[2], Iter 1000, Minibatch Loss= 0.274811
+Epoch[2], Iter 1500, Minibatch Loss= 0.092926
+Epoch[2], Iter 2000, Minibatch Loss= 0.019516
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 746 phrases; correct: 610.
+accuracy:  98.12%; precision:  81.77%; recall:  78.91%; FB1:  80.32
+               UN: precision:  81.77%; recall:  78.91%; FB1:  80.32  746
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21942/22363 (98.11743%)
+80.32
+dev_score_end
+Score on dev: 80.32000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[2], Iter 2500, Minibatch Loss= 0.213150
+Epoch[2], Iter 3000, Minibatch Loss= 0.001099
+Epoch[2], Iter 3500, Minibatch Loss= 0.000916
+Epoch[2], Iter 4000, Minibatch Loss= 0.000961
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 802 phrases; correct: 634.
+accuracy:  98.15%; precision:  79.05%; recall:  82.02%; FB1:  80.51
+               UN: precision:  79.05%; recall:  82.02%; FB1:  80.51  802
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21950/22363 (98.15320%)
+80.51
+dev_score_end
+Score on dev: 80.51000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[2], Iter 4500, Minibatch Loss= 0.016777
+Epoch[2], Iter 5000, Minibatch Loss= 0.000587
+Epoch[2], Iter 5500, Minibatch Loss= 1.174377
+Starting epoch 3...
+Epoch[3], Iter 500, Minibatch Loss= 0.234802
+Epoch[3], Iter 1000, Minibatch Loss= 0.022629
+Epoch[3], Iter 1500, Minibatch Loss= 0.330688
+Epoch[3], Iter 2000, Minibatch Loss= 0.006653
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 788 phrases; correct: 642.
+accuracy:  98.24%; precision:  81.47%; recall:  83.05%; FB1:  82.25
+               UN: precision:  81.47%; recall:  83.05%; FB1:  82.25  788
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21970/22363 (98.24263%)
+82.25
+dev_score_end
+Score on dev: 82.25000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[3], Iter 2500, Minibatch Loss= 0.004456
+Epoch[3], Iter 3000, Minibatch Loss= 7.613274
+Epoch[3], Iter 3500, Minibatch Loss= 0.024704
+Epoch[3], Iter 4000, Minibatch Loss= 0.451080
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 743 phrases; correct: 615.
+accuracy:  98.02%; precision:  82.77%; recall:  79.56%; FB1:  81.13
+               UN: precision:  82.77%; recall:  79.56%; FB1:  81.13  743
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21920/22363 (98.01905%)
+81.13
+dev_score_end
+Score on dev: 81.13000
+Epoch[3], Iter 4500, Minibatch Loss= 0.016373
+Epoch[3], Iter 5000, Minibatch Loss= 0.011116
+Epoch[3], Iter 5500, Minibatch Loss= 0.236145
+Starting epoch 4...
+Epoch[4], Iter 500, Minibatch Loss= 0.063309
+Epoch[4], Iter 1000, Minibatch Loss= 0.002838
+Epoch[4], Iter 1500, Minibatch Loss= 3.974365
+Epoch[4], Iter 2000, Minibatch Loss= 0.000610
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 745 phrases; correct: 608.
+accuracy:  98.12%; precision:  81.61%; recall:  78.65%; FB1:  80.11
+               UN: precision:  81.61%; recall:  78.65%; FB1:  80.11  745
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21942/22363 (98.11743%)
+80.11
+dev_score_end
+Score on dev: 80.11000
+Epoch[4], Iter 2500, Minibatch Loss= 0.003781
+Epoch[4], Iter 3000, Minibatch Loss= 0.002113
+Epoch[4], Iter 3500, Minibatch Loss= 0.023560
+Epoch[4], Iter 4000, Minibatch Loss= 2.878441
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 819 phrases; correct: 661.
+accuracy:  98.30%; precision:  80.71%; recall:  85.51%; FB1:  83.04
+               UN: precision:  80.71%; recall:  85.51%; FB1:  83.04  819
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21982/22363 (98.29629%)
+83.04
+dev_score_end
+Score on dev: 83.04000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[4], Iter 4500, Minibatch Loss= 0.003387
+Epoch[4], Iter 5000, Minibatch Loss= 0.000046
+Epoch[4], Iter 5500, Minibatch Loss= 0.127457
+Starting epoch 5...
+Epoch[5], Iter 500, Minibatch Loss= 0.016785
+Epoch[5], Iter 1000, Minibatch Loss= 0.129761
+Epoch[5], Iter 1500, Minibatch Loss= 0.062210
+Epoch[5], Iter 2000, Minibatch Loss= 25.449615
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 785 phrases; correct: 651.
+accuracy:  98.43%; precision:  82.93%; recall:  84.22%; FB1:  83.57
+               UN: precision:  82.93%; recall:  84.22%; FB1:  83.57  785
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22013/22363 (98.43491%)
+83.57
+dev_score_end
+Score on dev: 83.57000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[5], Iter 2500, Minibatch Loss= 0.015137
+Epoch[5], Iter 3000, Minibatch Loss= 0.175659
+Epoch[5], Iter 3500, Minibatch Loss= 1.490101
+Epoch[5], Iter 4000, Minibatch Loss= 0.085297
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 758 phrases; correct: 647.
+accuracy:  98.53%; precision:  85.36%; recall:  83.70%; FB1:  84.52
+               UN: precision:  85.36%; recall:  83.70%; FB1:  84.52  758
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22035/22363 (98.53329%)
+84.52
+dev_score_end
+Score on dev: 84.52000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[5], Iter 4500, Minibatch Loss= 0.011597
+Epoch[5], Iter 5000, Minibatch Loss= 0.022507
+Epoch[5], Iter 5500, Minibatch Loss= 0.018570
+Starting epoch 6...
+Epoch[6], Iter 500, Minibatch Loss= 0.000198
+Epoch[6], Iter 1000, Minibatch Loss= 0.176636
+Epoch[6], Iter 1500, Minibatch Loss= 0.042206
+Epoch[6], Iter 2000, Minibatch Loss= 0.086403
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 799 phrases; correct: 656.
+accuracy:  98.43%; precision:  82.10%; recall:  84.86%; FB1:  83.46
+               UN: precision:  82.10%; recall:  84.86%; FB1:  83.46  799
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22013/22363 (98.43491%)
+83.46
+dev_score_end
+Score on dev: 83.46000
+Epoch[6], Iter 2500, Minibatch Loss= 0.014923
+Epoch[6], Iter 3000, Minibatch Loss= 0.000305
+Epoch[6], Iter 3500, Minibatch Loss= 0.484650
+Epoch[6], Iter 4000, Minibatch Loss= 0.000061
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 730 phrases; correct: 626.
+accuracy:  98.30%; precision:  85.75%; recall:  80.98%; FB1:  83.30
+               UN: precision:  85.75%; recall:  80.98%; FB1:  83.30  730
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21983/22363 (98.30076%)
+83.30
+dev_score_end
+Score on dev: 83.30000
+Epoch[6], Iter 4500, Minibatch Loss= 0.029251
+Epoch[6], Iter 5000, Minibatch Loss= 0.088837
+Epoch[6], Iter 5500, Minibatch Loss= 0.023499
+Starting epoch 7...
+Epoch[7], Iter 500, Minibatch Loss= 0.005524
+Epoch[7], Iter 1000, Minibatch Loss= 5.915176
+Epoch[7], Iter 1500, Minibatch Loss= 0.000031
+Epoch[7], Iter 2000, Minibatch Loss= 1.993797
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 750 phrases; correct: 616.
+accuracy:  98.03%; precision:  82.13%; recall:  79.69%; FB1:  80.89
+               UN: precision:  82.13%; recall:  79.69%; FB1:  80.89  750
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21922/22363 (98.02799%)
+80.89
+dev_score_end
+Score on dev: 80.89000
+Epoch[7], Iter 2500, Minibatch Loss= 0.273361
+Epoch[7], Iter 3000, Minibatch Loss= 3.786621
+Epoch[7], Iter 3500, Minibatch Loss= 0.004807
+Epoch[7], Iter 4000, Minibatch Loss= 0.015015
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 795 phrases; correct: 663.
+accuracy:  98.52%; precision:  83.40%; recall:  85.77%; FB1:  84.57
+               UN: precision:  83.40%; recall:  85.77%; FB1:  84.57  795
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22031/22363 (98.51540%)
+84.57
+dev_score_end
+Score on dev: 84.57000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[7], Iter 4500, Minibatch Loss= 0.000084
+Epoch[7], Iter 5000, Minibatch Loss= 0.000908
+Epoch[7], Iter 5500, Minibatch Loss= 0.002045
+Starting epoch 8...
+Epoch[8], Iter 500, Minibatch Loss= 0.000015
+Epoch[8], Iter 1000, Minibatch Loss= 0.000233
+Epoch[8], Iter 1500, Minibatch Loss= 0.371552
+Epoch[8], Iter 2000, Minibatch Loss= 0.071930
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 825 phrases; correct: 669.
+accuracy:  98.39%; precision:  81.09%; recall:  86.55%; FB1:  83.73
+               UN: precision:  81.09%; recall:  86.55%; FB1:  83.73  825
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22002/22363 (98.38573%)
+83.73
+dev_score_end
+Score on dev: 83.73000
+Epoch[8], Iter 2500, Minibatch Loss= 0.003067
+Epoch[8], Iter 3000, Minibatch Loss= 0.402313
+Epoch[8], Iter 3500, Minibatch Loss= 0.001495
+Epoch[8], Iter 4000, Minibatch Loss= 0.048279
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 784 phrases; correct: 660.
+accuracy:  98.53%; precision:  84.18%; recall:  85.38%; FB1:  84.78
+               UN: precision:  84.18%; recall:  85.38%; FB1:  84.78  784
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22034/22363 (98.52882%)
+84.78
+dev_score_end
+Score on dev: 84.78000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[8], Iter 4500, Minibatch Loss= 0.000244
+Epoch[8], Iter 5000, Minibatch Loss= 0.005936
+Epoch[8], Iter 5500, Minibatch Loss= 0.000122
+Starting epoch 9...
+Epoch[9], Iter 500, Minibatch Loss= 0.003981
+Epoch[9], Iter 1000, Minibatch Loss= 0.006714
+Epoch[9], Iter 1500, Minibatch Loss= 0.478821
+Epoch[9], Iter 2000, Minibatch Loss= 0.000038
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 729 phrases; correct: 611.
+accuracy:  98.19%; precision:  83.81%; recall:  79.04%; FB1:  81.36
+               UN: precision:  83.81%; recall:  79.04%; FB1:  81.36  729
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21958/22363 (98.18897%)
+81.36
+dev_score_end
+Score on dev: 81.36000
+Epoch[9], Iter 2500, Minibatch Loss= 0.000019
+Epoch[9], Iter 3000, Minibatch Loss= 0.006058
+Epoch[9], Iter 3500, Minibatch Loss= 7.449860
+Epoch[9], Iter 4000, Minibatch Loss= 0.024597
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 776 phrases; correct: 655.
+accuracy:  98.51%; precision:  84.41%; recall:  84.73%; FB1:  84.57
+               UN: precision:  84.41%; recall:  84.73%; FB1:  84.57  776
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22030/22363 (98.51093%)
+84.57
+dev_score_end
+Score on dev: 84.57000
+Epoch[9], Iter 4500, Minibatch Loss= 1.983337
+Epoch[9], Iter 5000, Minibatch Loss= 0.182175
+Epoch[9], Iter 5500, Minibatch Loss= 0.009949
+Starting epoch 10...
+Epoch[10], Iter 500, Minibatch Loss= 0.000122
+Epoch[10], Iter 1000, Minibatch Loss= 1.233704
+Epoch[10], Iter 1500, Minibatch Loss= 0.003395
+Epoch[10], Iter 2000, Minibatch Loss= 1.995483
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 797 phrases; correct: 652.
+accuracy:  98.18%; precision:  81.81%; recall:  84.35%; FB1:  83.06
+               UN: precision:  81.81%; recall:  84.35%; FB1:  83.06  797
+saving the pic
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21956/22363 (98.18003%)
+83.06
+dev_score_end
+Score on dev: 83.06000
+Epoch[10], Iter 2500, Minibatch Loss= 0.019226
+Epoch[10], Iter 3000, Minibatch Loss= 0.062370
+Epoch[10], Iter 3500, Minibatch Loss= 0.008759
+Epoch[10], Iter 4000, Minibatch Loss= 0.000061
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 777 phrases; correct: 659.
+accuracy:  98.56%; precision:  84.81%; recall:  85.25%; FB1:  85.03
+               UN: precision:  84.81%; recall:  85.25%; FB1:  85.03  777
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22040/22363 (98.55565%)
+85.03
+dev_score_end
+Score on dev: 85.03000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[10], Iter 4500, Minibatch Loss= 1.585014
+Epoch[10], Iter 5000, Minibatch Loss= 0.562019
+Epoch[10], Iter 5500, Minibatch Loss= 0.074509
+Starting epoch 11...
+Epoch[11], Iter 500, Minibatch Loss= 1.405502
+Epoch[11], Iter 1000, Minibatch Loss= 0.001007
+Epoch[11], Iter 1500, Minibatch Loss= 2.280449
+Epoch[11], Iter 2000, Minibatch Loss= 0.003052
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 767 phrases; correct: 643.
+accuracy:  98.37%; precision:  83.83%; recall:  83.18%; FB1:  83.51
+               UN: precision:  83.83%; recall:  83.18%; FB1:  83.51  767
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21998/22363 (98.36784%)
+83.51
+dev_score_end
+Score on dev: 83.51000
+Epoch[11], Iter 2500, Minibatch Loss= 4.928818
+Epoch[11], Iter 3000, Minibatch Loss= 0.002197
+Epoch[11], Iter 3500, Minibatch Loss= 0.001272
+Epoch[11], Iter 4000, Minibatch Loss= 0.002060
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 760 phrases; correct: 649.
+accuracy:  98.45%; precision:  85.39%; recall:  83.96%; FB1:  84.67
+               UN: precision:  85.39%; recall:  83.96%; FB1:  84.67  760
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22017/22363 (98.45280%)
+84.67
+dev_score_end
+Score on dev: 84.67000
+Epoch[11], Iter 4500, Minibatch Loss= 0.002396
+Epoch[11], Iter 5000, Minibatch Loss= 0.016388
+Epoch[11], Iter 5500, Minibatch Loss= 0.004440
+Starting epoch 12...
+Epoch[12], Iter 500, Minibatch Loss= 10.461838
+Epoch[12], Iter 1000, Minibatch Loss= 0.000397
+Epoch[12], Iter 1500, Minibatch Loss= 0.021759
+Epoch[12], Iter 2000, Minibatch Loss= 0.006226
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 806 phrases; correct: 671.
+accuracy:  98.53%; precision:  83.25%; recall:  86.80%; FB1:  84.99
+               UN: precision:  83.25%; recall:  86.80%; FB1:  84.99  806
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22035/22363 (98.53329%)
+84.99
+dev_score_end
+Score on dev: 84.99000
+Epoch[12], Iter 2500, Minibatch Loss= 3.065529
+Epoch[12], Iter 3000, Minibatch Loss= -0.000031
+Epoch[12], Iter 3500, Minibatch Loss= 0.001526
+Epoch[12], Iter 4000, Minibatch Loss= 0.000946
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 760 phrases; correct: 639.
+accuracy:  98.35%; precision:  84.08%; recall:  82.66%; FB1:  83.37
+               UN: precision:  84.08%; recall:  82.66%; FB1:  83.37  760
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+21993/22363 (98.34548%)
+83.37
+dev_score_end
+Score on dev: 83.37000
+Epoch[12], Iter 4500, Minibatch Loss= 0.063583
+Epoch[12], Iter 5000, Minibatch Loss= 0.000015
+Epoch[12], Iter 5500, Minibatch Loss= 0.010172
+Starting epoch 13...
+Epoch[13], Iter 500, Minibatch Loss= 0.000139
+Epoch[13], Iter 1000, Minibatch Loss= 0.030045
+Epoch[13], Iter 1500, Minibatch Loss= 0.000038
+Epoch[13], Iter 2000, Minibatch Loss= 0.001862
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 761 phrases; correct: 643.
+accuracy:  98.47%; precision:  84.49%; recall:  83.18%; FB1:  83.83
+               UN: precision:  84.49%; recall:  83.18%; FB1:  83.83  761
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22021/22363 (98.47069%)
+83.83
+dev_score_end
+Score on dev: 83.83000
+Epoch[13], Iter 2500, Minibatch Loss= 0.000183
+Epoch[13], Iter 3000, Minibatch Loss= 0.000015
+Epoch[13], Iter 3500, Minibatch Loss= 0.011978
+Epoch[13], Iter 4000, Minibatch Loss= 0.000015
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 785 phrases; correct: 668.
+accuracy:  98.60%; precision:  85.10%; recall:  86.42%; FB1:  85.75
+               UN: precision:  85.10%; recall:  86.42%; FB1:  85.75  785
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22049/22363 (98.59590%)
+85.75
+dev_score_end
+Score on dev: 85.75000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[13], Iter 4500, Minibatch Loss= -0.000153
+Epoch[13], Iter 5000, Minibatch Loss= 0.002014
+Epoch[13], Iter 5500, Minibatch Loss= 0.159454
+Starting epoch 14...
+Epoch[14], Iter 500, Minibatch Loss= 0.001984
+Epoch[14], Iter 1000, Minibatch Loss= 0.044418
+Epoch[14], Iter 1500, Minibatch Loss= 0.116211
+Epoch[14], Iter 2000, Minibatch Loss= 0.021103
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 786 phrases; correct: 665.
+accuracy:  98.56%; precision:  84.61%; recall:  86.03%; FB1:  85.31
+               UN: precision:  84.61%; recall:  86.03%; FB1:  85.31  786
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22040/22363 (98.55565%)
+85.31
+dev_score_end
+Score on dev: 85.31000
+Epoch[14], Iter 2500, Minibatch Loss= 15.844048
+Epoch[14], Iter 3000, Minibatch Loss= 0.001312
+Epoch[14], Iter 3500, Minibatch Loss= 0.112900
+Epoch[14], Iter 4000, Minibatch Loss= 0.000046
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 764 phrases; correct: 659.
+accuracy:  98.63%; precision:  86.26%; recall:  85.25%; FB1:  85.75
+               UN: precision:  86.26%; recall:  85.25%; FB1:  85.75  764
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22057/22363 (98.63167%)
+85.75
+dev_score_end
+Score on dev: 85.75000
+Epoch[14], Iter 4500, Minibatch Loss= 2.256622
+Epoch[14], Iter 5000, Minibatch Loss= 0.665543
+Epoch[14], Iter 5500, Minibatch Loss= 0.000057
+Starting epoch 15...
+Epoch[15], Iter 500, Minibatch Loss= 0.552612
+Epoch[15], Iter 1000, Minibatch Loss= 0.000381
+Epoch[15], Iter 1500, Minibatch Loss= 0.000000
+Epoch[15], Iter 2000, Minibatch Loss= 0.000366
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 780 phrases; correct: 663.
+accuracy:  98.57%; precision:  85.00%; recall:  85.77%; FB1:  85.38
+               UN: precision:  85.00%; recall:  85.77%; FB1:  85.38  780
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22043/22363 (98.56906%)
+85.38
+dev_score_end
+Score on dev: 85.38000
+Epoch[15], Iter 2500, Minibatch Loss= 14.554672
+Epoch[15], Iter 3000, Minibatch Loss= 0.234833
+Epoch[15], Iter 3500, Minibatch Loss= 0.000828
+Epoch[15], Iter 4000, Minibatch Loss= -0.000061
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 769 phrases; correct: 662.
+accuracy:  98.65%; precision:  86.09%; recall:  85.64%; FB1:  85.86
+               UN: precision:  86.09%; recall:  85.64%; FB1:  85.86  769
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22062/22363 (98.65403%)
+85.86
+dev_score_end
+Score on dev: 85.86000
+New best score on dev.
+Saving model to disk...
+ [*] Saving checkpoints...
+Epoch[15], Iter 4500, Minibatch Loss= 4.160309
+Epoch[15], Iter 5000, Minibatch Loss= -0.000061
+Epoch[15], Iter 5500, Minibatch Loss= 0.000214
+Starting epoch 16...
+Epoch[16], Iter 500, Minibatch Loss= 0.000015
+Epoch[16], Iter 1000, Minibatch Loss= 0.000107
+Epoch[16], Iter 1500, Minibatch Loss= 0.002792
+Epoch[16], Iter 2000, Minibatch Loss= -0.000015
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 759 phrases; correct: 650.
+accuracy:  98.45%; precision:  85.64%; recall:  84.09%; FB1:  84.86
+               UN: precision:  85.64%; recall:  84.09%; FB1:  84.86  759
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22017/22363 (98.45280%)
+84.86
+dev_score_end
+Score on dev: 84.86000
+Epoch[16], Iter 2500, Minibatch Loss= 0.039215
+Epoch[16], Iter 3000, Minibatch Loss= 0.132111
+Epoch[16], Iter 3500, Minibatch Loss= 0.000046
+Epoch[16], Iter 4000, Minibatch Loss= 0.025055
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 787 phrases; correct: 667.
+accuracy:  98.53%; precision:  84.75%; recall:  86.29%; FB1:  85.51
+               UN: precision:  84.75%; recall:  86.29%; FB1:  85.51  787
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22035/22363 (98.53329%)
+85.51
+dev_score_end
+Score on dev: 85.51000
+Epoch[16], Iter 4500, Minibatch Loss= 0.012756
+Epoch[16], Iter 5000, Minibatch Loss= 0.004471
+Epoch[16], Iter 5500, Minibatch Loss= 0.000931
+Starting epoch 17...
+Epoch[17], Iter 500, Minibatch Loss= 0.005798
+Epoch[17], Iter 1000, Minibatch Loss= -0.000061
+Epoch[17], Iter 1500, Minibatch Loss= 0.002579
+Epoch[17], Iter 2000, Minibatch Loss= 0.004654
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 796 phrases; correct: 665.
+accuracy:  98.51%; precision:  83.54%; recall:  86.03%; FB1:  84.77
+               UN: precision:  83.54%; recall:  86.03%; FB1:  84.77  796
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22029/22363 (98.50646%)
+84.77
+dev_score_end
+Score on dev: 84.77000
+Epoch[17], Iter 2500, Minibatch Loss= 14.165039
+Epoch[17], Iter 3000, Minibatch Loss= 2.513763
+Epoch[17], Iter 3500, Minibatch Loss= 0.000061
+Epoch[17], Iter 4000, Minibatch Loss= 0.000031
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 742 phrases; correct: 643.
+accuracy:  98.42%; precision:  86.66%; recall:  83.18%; FB1:  84.88
+               UN: precision:  86.66%; recall:  83.18%; FB1:  84.88  742
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22009/22363 (98.41703%)
+84.88
+dev_score_end
+Score on dev: 84.88000
+Epoch[17], Iter 4500, Minibatch Loss= 0.000183
+Epoch[17], Iter 5000, Minibatch Loss= 0.000732
+Epoch[17], Iter 5500, Minibatch Loss= 0.000717
+Starting epoch 18...
+Epoch[18], Iter 500, Minibatch Loss= 0.000015
+Epoch[18], Iter 1000, Minibatch Loss= 0.040894
+Epoch[18], Iter 1500, Minibatch Loss= 0.000046
+Epoch[18], Iter 2000, Minibatch Loss= 0.005127
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 756 phrases; correct: 650.
+accuracy:  98.54%; precision:  85.98%; recall:  84.09%; FB1:  85.02
+               UN: precision:  85.98%; recall:  84.09%; FB1:  85.02  756
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22037/22363 (98.54223%)
+85.02
+dev_score_end
+Score on dev: 85.02000
+Epoch[18], Iter 2500, Minibatch Loss= 0.000412
+Epoch[18], Iter 3000, Minibatch Loss= 0.000351
+Epoch[18], Iter 3500, Minibatch Loss= 0.040222
+Epoch[18], Iter 4000, Minibatch Loss= 0.008209
+Preparing Data
+run CONLL script
+Result created
+processed 22363 tokens with 773 phrases; found: 725 phrases; correct: 634.
+accuracy:  98.55%; precision:  87.45%; recall:  82.02%; FB1:  84.65
+               UN: precision:  87.45%; recall:  82.02%; FB1:  84.65  725
+{: >2}{: >7}{: >7}     ID     NE  Total{: >9}
+{: >2}{: >7}{: >7}      0      O  20775{: >9}
+{: >2}{: >7}{: >7}      1   B-UN    773{: >9}
+{: >2}{: >7}{: >7}      2   I-UN    815{: >9}
+22038/22363 (98.54671%)
+84.65
+dev_score_end
+Score on dev: 84.65000
+Epoch[18], Iter 4500, Minibatch Loss= 1.448944
+Epoch[18], Iter 5000, Minibatch Loss= 0.007650
+Epoch[18], Iter 5500, Minibatch Loss= 0.000122
+Starting epoch 19...
+Epoch[19], Iter 500, Minibatch Loss= -0.000015
+Epoch[19], Iter 1000, Minibatch Loss= 0.000061

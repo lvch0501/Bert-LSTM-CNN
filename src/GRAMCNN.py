@@ -9,7 +9,9 @@ class GRAMCNN(Model):
 
    def __init__(self,
                 vocab_len, character_vocab_len, postag_vocab_len,
+                bert_vocab_len,
                 use_word = True,
+                use_bert_word = True,
                 use_char = True,
                 use_pts = True,
                 train_size = 10000,
@@ -19,6 +21,8 @@ class GRAMCNN(Model):
                 hidden_size = 400,
                 hidden_layers = 1,
                 word_emb = 200, char_emb = 25, pt_emb = 15,
+                bert_word_embedding_dim = 768,
+                bert_word_embedding = None,
                 drop_out = 0.5, num_classes = 3, word2vec = None, highway = True, crf = True, padding = False,
                 max_seq_len = 200):
        self.train_size = train_size
@@ -28,6 +32,9 @@ class GRAMCNN(Model):
        self.padding = padding
        self.crf = crf
        self.highway = highway
+       self.bert_word_embedding_dim = bert_word_embedding_dim
+       self.bert_word_embedding = bert_word_embedding
+       self.use_bert_word = use_bert_word
        self.num_classes = num_classes
        self.feature_maps = feature_maps
        self.kernels = kernels
@@ -36,11 +43,13 @@ class GRAMCNN(Model):
        if not self.padding:
            self.char_input = tf.placeholder(tf.int32, shape=[None, None])
            self.word_input = tf.placeholder(tf.int32, shape=[None])
+           self.bio_word_input = tf.placeholder(tf.int32, shape=[None])
            self.pt_input = tf.placeholder(tf.int32, shape=[None])
            self.target = tf.placeholder(tf.int32, shape=[None])
        else:
            self.char_input = tf.placeholder(tf.int32, shape=[self.max_seq_len, None])
            self.word_input = tf.placeholder(tf.int32, shape=[self.max_seq_len])
+           self.bio_word_input = tf.placeholder(tf.int32, shape=[self.max_seq_len])
            self.pt_input = tf.placeholder(tf.int32, shape=[self.max_seq_len])
            self.target = tf.placeholder(tf.int32, shape=[max_seq_len])
            self.s_len = tf.placeholder(tf.int32, shape=[None])
@@ -58,6 +67,11 @@ class GRAMCNN(Model):
        else:
            self.w_emb_size = 0
            print('Not use word embedding')
+       if self.use_bert_word:
+           self.total_emb_size += self.bert_word_embedding_dim
+       else:
+           self.bert_word_embedding_dim = 0
+           print('Not use bert word embedding')
        if self.use_char:
            self.char_emb_dim = sum(feature_maps)
            self.total_emb_size += self.char_emb_dim
@@ -74,11 +88,12 @@ class GRAMCNN(Model):
        self.forward_only = forward_only
 
        self.word_vocab_size = vocab_len
+       self.bert_vocab_size = bert_vocab_len
        self.char_vocab_size = character_vocab_len
        self.postag_vocab_size = postag_vocab_len
 
        self.max_grad_norm = 5
-       self._build(word2vec)
+       self._build(word2vec, bert_word_embedding)
 
        init = tf.global_variables_initializer()
        self.sess.run(init)
@@ -90,7 +105,7 @@ class GRAMCNN(Model):
        length = tf.cast(length, tf.int32)
        return length
 
-   def _build(self, pretrained_word_embedding):
+   def _build(self, pretrained_word_embedding, bert_word_embedding):
        with tf.variable_scope("LSTMTDNN"):
            with tf.device('/cpu:0'):
                if self.use_char:
@@ -115,13 +130,24 @@ class GRAMCNN(Model):
                                                                  pretrained_word_embedding), trainable=False)
 
                # char_vecs sentence_len x max_word_len x embedding_len
+               if self.use_bert_word:
+                   if bert_word_embedding is None:
+                       self.bio_bert_word_embedding = tf.get_variable("bio_bert_word_matrix",
+                                                             [self.bert_vocab_size, self.bert_word_embedding_dim],
+                                                             initializer=tf.uniform_unit_scaling_initializer())
+                   else:
+                       self.bio_bert_word_embedding = tf.get_variable("bio_bert_word_matrix",
+                                                             [self.bert_vocab_size, self.bert_word_embedding_dim],
+                                                             initializer=tf.constant_initializer(
+                                                                 bert_word_embedding), trainable=False)
                if self.use_char:
                    char_vecs = tf.nn.embedding_lookup(self.char_embedding, self.char_input)
 
                # word_vec  sentence_len x embedding_len
                if self.use_word:
                    word_vecs = tf.nn.embedding_lookup(self.word_embedding, self.word_input)
-
+               if self.use_bert_word:
+                   bio_word_vecs = tf.nn.embedding_lookup(self.bio_bert_word_embedding, self.bio_word_input)
                # postag_vec sentence_len x embedding_len
                if self.use_pts:
                    pt_vecs = tf.nn.embedding_lookup(self.postag_embedding, self.pt_input)
@@ -135,7 +161,10 @@ class GRAMCNN(Model):
                # else:
                combined_emb = char_cnn.output
            if self.use_word:
-               combined_emb = tf.concat([word_vecs, combined_emb], 1)
+               combined_emb = tf.concat([word_vecs,combined_emb], 1)
+
+           if self.use_bert_word:
+               combined_emb = tf.concat([bio_word_vecs, combined_emb], 1)
 
            combined_emb = tf.reshape(combined_emb, [-1, self.total_emb_size])
 
@@ -232,6 +261,7 @@ class GRAMCNN(Model):
        feed_dict = {self.char_input: inputs['char_for'],
                     self.word_input: inputs['word'],
                     self.target: inputs['label'],
+                    self.bio_word_input:inputs['bio_bert'],
                     self.drop_rate: 0.5}
        if self.use_pts:
            feed_dict[self.pt_input] = inputs['pts']
@@ -248,6 +278,7 @@ class GRAMCNN(Model):
    def test(self, inputs, word_len=[]):
        feed_dict = {self.char_input: inputs['char_for'],
                     self.word_input: inputs['word'],
+                    self.bio_word_input:inputs['bio_bert'],
                     self.drop_rate: 0}
        if self.use_pts:
            feed_dict[self.pt_input] = inputs['pts']
